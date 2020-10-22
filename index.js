@@ -78,5 +78,6 @@ app.get('/movies', (req, res) => {
   res.json(topMovies);
 });
 
-// Listen For Requests
-app.listen(8080, () => console.log('Your app is listening on port 8080.'));
+// Listen For Requests with environment variable
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Your app is listening on port ${port}...`));
