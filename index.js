@@ -161,8 +161,8 @@ app.get('/api/movies/:title', (req, res) => {
   res.status(200).send(result);
 });
 
-// GET: Return data about a genre
-app.get('/api/genres/:genre', (req, res) => {
+// GET: Return all movies containing a specific genre
+app.get('/api/movies/genres/:genre', (req, res) => {
   // Find movies with that genre and return 404 if not found
   const result = movies.filter((c) => c.genre === req.params.genre);
   if (!result) return res.status(404).send('Genre not found!');
@@ -172,20 +172,16 @@ app.get('/api/genres/:genre', (req, res) => {
 });
 
 // GET: Return data about a director (bio, birth year, death year) by name
-app.get('/api/directors/:director', (req, res) => {
+app.get('/api/movies/directors/:director', (req, res) => {
   // Find director and return 404 if not found
   const director = movies.find((c) => c.director.name === req.params.director);
   if (!director) return res.status(404).send('Director not found!');
 
   // Returns all information about that director
-  res.status(200).send(`Director found successfully!
-   Name: ${director.director.name},
-   Date of Birth: ${director.director.dob},
-   Date of Death: ${director.director.dod},
-   Bio: ${director.director.bio}`);
+  res.status(200).send(director.director);
 });
 
-// POST: Allow new users to register
+// POST: Add a new user
 app.post('/api/users/', (req, res) => {
   // Check valid user input
   const result = validateUser(req.body);
@@ -203,15 +199,9 @@ app.post('/api/users/', (req, res) => {
     req.body.dob
   );
 
-  // Adds user to data
+  // Adds user to data & return user
   users.push(user);
-
-  // Returns user
-  res.status(201).send(`New user added successfully!
-  Username: ${user.username},
-  Password: ${user.password},
-  Email: ${user.email},
-  Dob: ${user.dob}`);
+  res.status(201).send(user);
 });
 
 function validateUser(user) {
@@ -225,12 +215,7 @@ function validateUser(user) {
   return schema.validate(user);
 }
 
-// RETURN LIST OF ALL USERS FOR TESTING
-app.get('/api/users/list', (req, res) => {
-  res.status(200).send(users);
-});
-
-// PUT: Allow users to update their info (username, password, email, date of birth)
+// PUT: Update user info (username, password, email, dob)
 app.put('/api/users/:username', (req, res) => {
   // Find user and return 404 if not found
   let user = users.find((c) => c.username === req.params.username);
@@ -242,11 +227,7 @@ app.put('/api/users/:username', (req, res) => {
   user.email = req.body.email;
   user.dob = req.body.dob;
 
-  res.status(201).send(`User information updated successfully! 
-    New username: ${user.username},
-    New password: ${user.password},
-    New email: ${user.email},
-    New dob: ${user.dob}`);
+  res.status(201).send(user);
 });
 
 // POST: Allow users to add a movie to their list of favorites

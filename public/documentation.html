@@ -9,13 +9,14 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../css/styles.css" />
     <title>fightFlix API Documentation</title>
   </head>
-  <body class="bg-dark p-2">
-    <div class="container mt-3">
+  <body class="bg-dark text-light">
+    <div class="container mt-2">
       <div class="row">
-        <div class="col-lg-6 mx-auto">
-          <h1 class="text-center text-light">
+        <div class="col">
+          <h1 class="h2 text-center">
             <span class="text-danger">fight</span
             ><span class="font-italic">Flix</span> API Documentation
           </h1>
@@ -23,29 +24,33 @@
       </div>
       <div class="row">
         <div class="col-lg-6 mx-auto">
-          <p class="text-light text-center">
+          <p class="text-center">
             <span class="font-italic">Yo Adrian! </span>Find all of your
             favorite combat films in one place,<br />
             easily accessible through a modern RESTful API.
           </p>
         </div>
       </div>
-      <p></p>
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <button id="theme-btn" class="btn btn-light">Toggle Dark Mode</button>
+        </div>
+      </div>
     </div>
     <div class="container mt-3">
       <div class="row">
-        <div class="col mx-auto">
-          <h2 class="text-left text-danger">About</h2>
-          <p class="text-left text-light">
+        <div class="col">
+          <h2 class="h3 text-danger">About</h2>
+          <p>
             This website provides a RESTful API interface to return
             JSON-formatted data related all films fighting.
           </p>
         </div>
       </div>
       <div class="row">
-        <div class="col mx-auto">
-          <h2 class="text-left text-danger">Features</h2>
-          <ul class="text-light">
+        <div class="col">
+          <h2 class="h3 text-danger">Features</h2>
+          <ul>
             <li>Return a list of all fighting movies to the user</li>
             <li>
               Return data (description, genre, director, and image URL about a
@@ -67,19 +72,268 @@
           </ul>
         </div>
       </div>
+      <!-- Movies API Endpoints Table -->
+      <table id="table-1" class="table table-striped table-dark">
+        <legend class="text-danger">Accessing Movie Database</legend>
+        <thead>
+          <tr>
+            <th scope="col">HTTP Method</th>
+            <th scope="col">URL</th>
+            <th scope="col">Logic</th>
+            <th scope="col">Request Format</th>
+            <th scope="col">Response Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="text-success" scope="row">GET</th>
+            <td>/api/movies</td>
+            <td>Return a list of all movies</td>
+            <td>N/A</td>
+            <td>Array containing JSON objects with data of all movies</td>
+          </tr>
+          <tr>
+            <th class="text-success" scope="row">GET</th>
+            <td>/api/movies/<span class="text-success">{title}</span></td>
+            <td>Return data about a single movie</td>
+            <td>N/A</td>
+            <td>JSON object with data of a single movie</td>
+          </tr>
+          <tr>
+            <th class="text-success" scope="row">GET</th>
+            <td>
+              /api/movies/genres/<span class="text-success">{genre}</span>
+            </td>
+            <td>Return all movies containing a specific genre</td>
+            <td>N/A</td>
+            <td>
+              Array of JSON objects with data of all movies that contain
+              specified genre
+            </td>
+          </tr>
+          <tr>
+            <th class="text-success">GET</th>
+            <td>
+              /api/movies/directors/<span class="text-success">{director}</span>
+            </td>
+            <td>Return data about a single director</td>
+            <td>N/A</td>
+            <td>JSON object with data of a single director</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Users API Endpoints Table -->
+      <table id="table-2" class="table table-striped table-dark mw-100">
+        <legend class="text-danger">Accessing Users Database</legend>
+        <thead>
+          <tr>
+            <th scope="col">HTTP Method</th>
+            <th scope="col">URL</th>
+            <th scope="col">Logic</th>
+            <th scope="col">Request Format</th>
+            <th scope="col">Response Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th class="text-warning" scope="row">POST</th>
+            <td>/api/users</td>
+            <td>Add a new user</td>
+            <td>JSON</td>
+            <td>JSON object with data of added user</td>
+          </tr>
+          <tr>
+            <th class="text-primary" scope="row">PUT</th>
+            <td>/api/users/<span class="text-success">{username}</span></td>
+            <td>Update data of a single user</td>
+            <td>JSON</td>
+            <td>JSON object with updated data of user</td>
+          </tr>
+          <tr>
+            <th class="text-warning" scope="row">POST</th>
+            <td>
+              /api/users/<span class="text-success">{username}</span
+              >/favorites/<span class="text-success">{title}</span>
+            </td>
+            <td>Add a movie to user's list of favorites</td>
+            <td>N/A</td>
+            <td>
+              A text message confirming the title was successfully added to
+              user's list of favorites
+            </td>
+          </tr>
+          <tr>
+            <th class="text-danger">DELETE</th>
+            <td>
+              /api/users/<span class="text-success">{username}</span
+              >/favorites/<span class="text-success">{title}</span>
+            </td>
+            <td>Remove single movie from user's list of favorites</td>
+            <td>N/A</td>
+            <td>
+              A text message confirming the title was successfully removed from
+              user's list of favorites
+            </td>
+          </tr>
+          <tr>
+            <th class="text-danger">DELETE</th>
+            <td>/api/users/<span class="text-success">{username} </span></td>
+            <td>Remove a user's account</td>
+            <td>N/A</td>
+            <td>
+              A text message confirming that the user's account was successfully
+              removed
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Movies API Endpoint Request/Response Examples -->
+    <div class="container mt-5">
       <div class="row">
-        <div class="col mx-auto">
-          <h2 class="text-left text-danger">Technologies Used</h2>
-          <ul class="text-light">
-            <li>Node.js and Express</li>
-            <li>REST API architecture</li>
-            <li>Database built with MongoDB</li>
-            <li>Business Logic modeled with Mongoose</li>
-            <li>API testing with Postman</li>
-          </ul>
+        <div class="col">
+          <h2 class="h3 text-danger">
+            Sample Requests & Responses for
+            <span class="text-success">/api/movies</span>
+          </h2>
         </div>
       </div>
-      <div class="row"></div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-success">GET </span> request for all movies. (e.g.
+            <span class="text-success">/api/movies</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/GET-all-movies.png"
+            alt="GET request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-success">GET </span>request for a single movies.
+            (e.g. <span class="text-success">/api/movies/Rocky%20II</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/GET-single-movie.png"
+            alt="GET request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-success">GET </span>request for a specific movie
+            genre (e.g.
+            <span class="text-success">/api/movies/genres/Boxing</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/GET-genre.png"
+            alt="GET request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-success">GET </span> request for a single
+            director. (e.g.
+            <span class="text-success"
+              >/api/movies/directors/Sylvester%20Stallone</span
+            >)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/GET-director.png"
+            alt="GET request response"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Users API Endpoint Request/Response Examples -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col">
+          <h2 class="h3 text-danger">
+            Sample Requests & Responses for
+            <span class="text-success">/api/users</span>
+          </h2>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-warning">POST </span>request to add new user (e.g.
+            <span class="text-success">/api/users</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/POST-users-new.png"
+            alt="POST request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-primary">PUT </span>request to update user
+            information of a single user(e.g.
+            <span class="text-success">/api/users/user123</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/PUT-user-update.png"
+            alt="PUT request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-warning">POST </span>request to add a movie to
+            user's list of favorites(e.g.
+            <span class="text-success">/api/users/user123/Rocky%20V</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/POST-favorite.png"
+            alt="POST request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-danger">DELETE </span>a movie from user's list of
+            favorites(e.g.
+            <span class="text-success">/api/users/user123/favorites/Rocky</span
+            >)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/DELETE-favorite.png"
+            alt="DELETE request response"
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col">
+          <h3 class="h4">
+            <span class="text-danger">DELETE </span>a user's account(e.g.
+            <span class="text-success">/api/users/user123</span>)
+          </h3>
+          <img
+            class="img-fluid"
+            src="../img/DELETE-user.png"
+            alt="DELETE request response"
+          />
+        </div>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -91,5 +345,6 @@
       integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
       crossorigin="anonymous"
     ></script>
+    <script src="../js/app.js"></script>
   </body>
 </html>
