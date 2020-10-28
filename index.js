@@ -4,9 +4,21 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   methodOverride = require('method-override'),
   uuid = require('uuid'),
-  Joi = require('joi');
+  Joi = require('joi'),
+  mongoose = require('mongoose'),
+  Models = require('./models.js');
 
 const app = express();
+
+// Classes that apply movie & user schema
+const Movies = Models.Movie;
+const Users = Models.User;
+
+// Connecting Database
+mongoose.connect('mongod://localhost:27017/fightFlixDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // // Defining a user class
 class User {
