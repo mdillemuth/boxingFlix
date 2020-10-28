@@ -50,37 +50,50 @@ app.get('/', (req, res) => {
 
 // GET: Return a list of all movies to the user
 app.get('/api/movies', (req, res) => {
-  res.status(200).send(movies);
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    });
 });
 
 // GET: Return data about a single movie by title to the user
 app.get('/api/movies/:title', (req, res) => {
-  // Find movie with that title and return 404 if not found
-  const result = movies.find((c) => c.title === req.params.title);
-  if (!result) return res.status(404).send('Title not found!');
-
-  // Return data about the movie
-  res.status(200).send(result);
+  Movies.find({ Title: req.params.title })
+    .then((movie) => {
+      res.status(201).json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    });
 });
 
 // GET: Return all movies containing a specific genre
 app.get('/api/movies/genres/:genre', (req, res) => {
-  // Find movies with that genre and return 404 if not found
-  const result = movies.filter((c) => c.genre === req.params.genre);
-  if (!result) return res.status(404).send('Genre not found!');
-
-  // Return all movies with the matching genre
-  res.status(200).send(result);
+  Movies.find({ 'Genre.Name': `${req.params.genre}` })
+    .then((movie) => {
+      res.status(201).json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    });
 });
 
 // GET: Return data about a director (bio, birth year, death year) by name
 app.get('/api/movies/directors/:director', (req, res) => {
-  // Find director and return 404 if not found
-  const director = movies.find((c) => c.director.name === req.params.director);
-  if (!director) return res.status(404).send('Director not found!');
-
-  // Returns all information about that director
-  res.status(200).send(director.director);
+  Movies.findOne({ 'Director.Name': `${req.params.director}` })
+    .then((movie) => {
+      res.status(201).json(movie.Director);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    });
 });
 
 // POST: Add a new user

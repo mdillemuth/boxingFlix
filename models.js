@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // URL to reach database
-const db = 'mongod://localhost:27017/fightFlixDB';
+const db = 'mongodb://localhost:27017/fightFlixDB';
 
 // Connecting database to mongoose asynchronously
 const connectDB = async () => {
