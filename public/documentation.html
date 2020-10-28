@@ -94,7 +94,7 @@
           </tr>
           <tr>
             <th class="text-success" scope="row">GET</th>
-            <td>/api/movies/<span class="text-success">{title}</span></td>
+            <td>/api/movies/<span class="text-success">{Title}</span></td>
             <td>Return data about a single movie</td>
             <td>N/A</td>
             <td>JSON object with data of a single movie</td>
@@ -102,7 +102,7 @@
           <tr>
             <th class="text-success" scope="row">GET</th>
             <td>
-              /api/movies/genres/<span class="text-success">{genre}</span>
+              /api/movies/genres/<span class="text-success">{Genre}</span>
             </td>
             <td>Return all movies containing a specific genre</td>
             <td>N/A</td>
@@ -114,7 +114,7 @@
           <tr>
             <th class="text-success">GET</th>
             <td>
-              /api/movies/directors/<span class="text-success">{director}</span>
+              /api/movies/directors/<span class="text-success">{Director}</span>
             </td>
             <td>Return data about a single director</td>
             <td>N/A</td>
@@ -144,7 +144,7 @@
           </tr>
           <tr>
             <th class="text-primary" scope="row">PUT</th>
-            <td>/api/users/<span class="text-success">{username}</span></td>
+            <td>/api/users/<span class="text-success">{Username}</span></td>
             <td>Update data of a single user</td>
             <td>JSON</td>
             <td>JSON object with updated data of user</td>
@@ -152,32 +152,26 @@
           <tr>
             <th class="text-warning" scope="row">POST</th>
             <td>
-              /api/users/<span class="text-success">{username}</span
-              >/favorites/<span class="text-success">{title}</span>
+              /api/users/<span class="text-success">{Username}</span
+              >/favorites/<span class="text-success">{Title}</span>
             </td>
             <td>Add a movie to user's list of favorites</td>
             <td>N/A</td>
-            <td>
-              A text message confirming the title was successfully added to
-              user's list of favorites
-            </td>
+            <td>An array of the updated list of the user's favorite movies.</td>
           </tr>
           <tr>
             <th class="text-danger">DELETE</th>
             <td>
-              /api/users/<span class="text-success">{username}</span
-              >/favorites/<span class="text-success">{title}</span>
+              /api/users/<span class="text-success">{Username}</span
+              >/favorites/<span class="text-success">{Title}</span>
             </td>
             <td>Remove single movie from user's list of favorites</td>
             <td>N/A</td>
-            <td>
-              A text message confirming the title was successfully removed from
-              user's list of favorites
-            </td>
+            <td>An array of the updated list of the user's favorite movies.</td>
           </tr>
           <tr>
             <th class="text-danger">DELETE</th>
-            <td>/api/users/<span class="text-success">{username} </span></td>
+            <td>/api/users/<span class="text-success">{Username} </span></td>
             <td>Remove a user's account</td>
             <td>N/A</td>
             <td>
@@ -206,7 +200,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/GET-all-movies.png"
+            src="../img/movies.png"
             alt="GET request response"
           />
         </div>
@@ -219,7 +213,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/GET-single-movie.png"
+            src="../img/movies-movieID.png"
             alt="GET request response"
           />
         </div>
@@ -233,7 +227,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/GET-genre.png"
+            src="../img/movies-Genre.png"
             alt="GET request response"
           />
         </div>
@@ -249,7 +243,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/GET-director.png"
+            src="../img/movies-Director.png"
             alt="GET request response"
           />
         </div>
@@ -273,7 +267,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/POST-users-new.png"
+            src="../img/users-add-user.png"
             alt="POST request response"
           />
         </div>
@@ -287,7 +281,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/PUT-user-update.png"
+            src="../img/users-update-user.png"
             alt="PUT request response"
           />
         </div>
@@ -301,7 +295,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/POST-favorite.png"
+            src="../img/users-add-favorite.png"
             alt="POST request response"
           />
         </div>
@@ -316,7 +310,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/DELETE-favorite.png"
+            src="../img/users-remove-favorite.png"
             alt="DELETE request response"
           />
         </div>
@@ -329,7 +323,7 @@
           </h3>
           <img
             class="img-fluid"
-            src="../img/DELETE-user.png"
+            src="../img/users-remove-account.png"
             alt="DELETE request response"
           />
         </div>

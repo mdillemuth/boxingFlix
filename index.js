@@ -62,7 +62,7 @@ app.get('/api/movies', (req, res) => {
 
 // GET: Return data about a single movie by title to the user
 app.get('/api/movies/:MovieID', (req, res) => {
-  Movies.find({ Title: req.params.MovieID })
+  Movies.find({ _id: req.params.MovieID })
     .then((movie) => {
       res.status(201).json(movie);
     })
@@ -153,7 +153,7 @@ app.post('/api/users/:Username/favorites/:MovieID', (req, res) => {
         console.error(err);
         res.status(500).send(`Error: ${err}`);
       } else {
-        res.status(201).json(updatedUser);
+        res.status(201).json(updatedUser.FavoriteMovies);
       }
     }
   );
@@ -170,7 +170,7 @@ app.delete('/api/users/:Username/favorites/:MovieID', (req, res) => {
         console.error(err);
         res.status(500).send(`Error: ${err}`);
       } else {
-        res.status(201).json(updatedUser);
+        res.status(201).json(updatedUser.FavoriteMovies);
       }
     }
   );
@@ -201,26 +201,3 @@ app.delete('/api/users/:Username', (req, res) => {
 // Listen For Requests with environment variable
 const port = process.env.PORT || 8181;
 app.listen(port, () => console.log(`Your app is listening on port ${port}...`));
-
-// function validateUser(user) {
-//   const schema = Joi.object({
-//     username: Joi.string().min(5).required(),
-//     password: Joi.string().min(7).required(),
-//     email: Joi.string().email().required(),
-//     dob: Joi.date().required(),
-//   });
-
-//   return schema.validate(user);
-// }
-
-// Find user and return 404 if not found
-// let user = users.find((c) => c.username === req.params.username);
-// if (!user) return res.status(404).send('User does not exist');
-
-// // Update information
-// user.username = req.body.username;
-// user.password = req.body.password;
-// user.email = req.body.email;
-// user.dob = req.body.dob;
-
-// res.status(201).send(user);
