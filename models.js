@@ -1,6 +1,23 @@
 // Import mongoose
 const mongoose = require('mongoose');
 
+// URL to reach database
+const db = 'mongod://localhost:27017/fightFlixDB';
+
+// Connecting database to mongoose asynchronously
+const connectDB = async () => {
+  try {
+    await mongoose.connect(db, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB Connected...');
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+};
+
 // Define schema for movies
 let movieSchema = mongoose.Schema({
   Title: { type: String, required: true },
@@ -31,6 +48,6 @@ let userSchema = mongoose.Schema({
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 
-// Export Movie & User Classes to use in Index.js
 module.exports.Movie = Movie;
 module.exports.User = User;
+module.exports.connectDB = connectDB;

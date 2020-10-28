@@ -1,135 +1,25 @@
-// Including modules
+// Including modules from npm packages
 const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
   methodOverride = require('method-override'),
   uuid = require('uuid'),
   Joi = require('joi'),
-  mongoose = require('mongoose'),
-  Models = require('./models.js');
+  mongoose = require('mongoose');
 
+// Initializing express
 const app = express();
+
+// Including original module for database/mongoose
+const Models = require('./models.js');
 
 // Classes that apply movie & user schema
 const Movies = Models.Movie;
 const Users = Models.User;
+const connectDB = Models.connectDB;
 
 // Connecting Database
-mongoose.connect('mongod://localhost:27017/fightFlixDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-// // Defining a user class
-class User {
-  constructor(id, username, password, email, dob) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.dob = dob;
-    this.favorites = null;
-  }
-}
-
-// Data: Users
-let users = [
-  {
-    id: '123',
-    username: 'user123',
-    password: 'password123',
-    email: 'user123@email.com',
-    dob: '12-23-1991',
-    favorites: ['Rocky', 'Rocky IV'],
-  },
-];
-
-// Data: Movies
-let movies = [
-  {
-    id: 1,
-    title: 'Rocky',
-    year: '1976',
-    genre: 'Action',
-    director: {
-      name: 'John G. Avildsen',
-      dob: '12-21-1935',
-      dod: '6-16-2017',
-      bio:
-        'John Guilbert Avildsen was an American film director. He is perhaps best known for directing Rocky, which earned him the Academy Award for Best Director. Other films he directed include Joe, Save the Tiger, The Formula, Neighbors, Lean on Me, Rocky V, 8 Seconds, and the first three The Karate Kid films.',
-    },
-    imageUrl: '#',
-    feature: true,
-    description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nulla, sequi.',
-  },
-  {
-    id: 2,
-    title: 'Rocky II',
-    year: '1979',
-    genre: 'Boxing',
-    director: {
-      name: 'Sylvester Stallone',
-      dob: '07-06-1946',
-      dod: null,
-      bio:
-        'Sylvester Enzio Stallone is an American actor, director, screenwriter, and producer',
-    },
-    imageUrl: '#',
-    feature: true,
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing.',
-  },
-  {
-    id: 3,
-    title: 'Rocky III',
-    year: '1982',
-    genre: 'Sports',
-    director: {
-      name: 'Sylvester Stallone',
-      dob: '07-06-1946',
-      dod: null,
-      bio:
-        'Sylvester Enzio Stallone is an American actor, director, screenwriter, and producer',
-    },
-    imageUrl: '#',
-    feature: true,
-    description: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    id: 4,
-    title: 'Rocky IV',
-    year: '1985',
-    genre: 'Action',
-    director: {
-      name: 'Sylvester Stallone',
-      dob: '07-06-1946',
-      dod: null,
-      bio:
-        'Sylvester Enzio Stallone is an American actor, director, screenwriter, and producer',
-    },
-    imageUrl: '#',
-    feature: true,
-    description:
-      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque, error consequuntur.',
-  },
-  {
-    id: 5,
-    title: 'Rocky V',
-    year: '1990',
-    genre: 'Boxing',
-    director: {
-      name: 'John G. Avildsen',
-      dob: '12-21-1935',
-      dod: '6-16-2017',
-      bio:
-        'John Guilbert Avildsen was an American film director. He is perhaps best known for directing Rocky, which earned him the Academy Award for Best Director. Other films he directed include Joe, Save the Tiger, The Formula, Neighbors, Lean on Me, Rocky V, 8 Seconds, and the first three The Karate Kid films.',
-    },
-    imageUrl: '#',
-    feature: true,
-    description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae quo architecto illo error praesentium eum vel soluta nihil mollitia rem!',
-  },
-];
+connectDB();
 
 // Middleware: Logging error responses
 app.use(morgan('common'));
