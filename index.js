@@ -1,41 +1,29 @@
-// Including modules from npm packages
 const express = require('express'),
   morgan = require('morgan'),
-  bodyParser = require('body-parser'),
   methodOverride = require('method-override'),
   uuid = require('uuid'),
   Joi = require('joi'),
   mongoose = require('mongoose');
 
-// Initializing express
 const app = express();
 
-// Including original module for database/mongoose
-const Models = require('./models.js');
-
-// Classes that apply movie & user schema
-const Movies = Models.Movie;
-const Users = Models.User;
-const connectDB = Models.connectDB;
+const connectDB = require('./db');
+const Movies = require('./models/Movies');
+const Users = require('./models/Users');
 
 // Connecting Database
 connectDB();
 
-// Middleware: Logging error responses
+// Initialize Middleware
 app.use(morgan('common'));
 
-// Middleware: Serving static file requests
+// Serving public files
 app.use(express.static('public'));
 
-// Middleware: Error handling
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+// Bodyparser
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Middleware:
-app.use(bodyParser.json());
 app.use(methodOverride());
 
 app.use((err, req, res, next) => {
