@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define Schema for User
+// Define Schema for Users
 let userSchema = new mongoose.Schema({
   Username: { type: String, required: true },
   Password: { type: String, required: true },
