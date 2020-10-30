@@ -8,6 +8,9 @@ const express = require('express'),
   Users = require('./models/Users'),
   app = express();
 
+const cors = require('cors');
+app.use(cors());
+
 const passport = require('passport');
 require('./passport');
 

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Define Schema for Users
 let userSchema = new mongoose.Schema({
@@ -8,6 +9,17 @@ let userSchema = new mongoose.Schema({
   Birthday: Date,
   FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 });
+
+// Hashing password
+userSchema.statics.hashPassword = (password) => {
+  return bcrypt.hashSync(password, 10);
+};
+
+// Don't use arrow function because of 'this'
+// Comparing hashed passwords
+userSchema.methods.validatePassword = function (password) {
+  return bcrypt.compareSync(password, this.Password);
+};
 
 // Create User Model
 let User = mongoose.model('User', userSchema);

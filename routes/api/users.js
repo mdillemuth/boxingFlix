@@ -10,10 +10,15 @@ const auth = passport.authenticate('jwt', { session: false });
 // @desc     Register a new user account
 // @access   Public
 router.post('/', (req, res) => {
+  // Hashing password
+  let hashedPassword = Users.hashPassword(req.body.Password);
+
+  // Checking if user exists
   Users.findOne({ Username: req.body.Username }).then((user) => {
     if (user) {
-      return res.status(400).send(`${req.body.Username} already exists!`);
+      return res.status(400).send('Invalid Credentials');
     } else {
+      // Create the account
       Users.create({
         Username: req.body.Username,
         Password: req.body.Password,
@@ -24,6 +29,7 @@ router.post('/', (req, res) => {
           res.status(201).json(user);
         })
         .catch((err) => {
+          console.error(error);
           res.status(500).send(`Error: ${err}`);
         });
     }

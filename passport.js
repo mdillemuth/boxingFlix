@@ -20,11 +20,18 @@ passport.use(
           return callback(error);
         }
 
+        // Check if user exists
         if (!user) {
           console.log('Incorrect username');
           return callback(null, false, {
-            message: 'Incorrect username or password',
+            message: 'Invalid username',
           });
+        }
+
+        // Check if hashed passwords match
+        if (!user.validatePassword(password)) {
+          console.log('Incorrect password');
+          return callback(null, false, { message: 'Invalid password' });
         }
 
         console.log('finished');
