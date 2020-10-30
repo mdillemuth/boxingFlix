@@ -6,11 +6,14 @@ const express = require('express'),
   connectDB = require('./db'),
   Movies = require('./models/Movies'),
   Users = require('./models/Users'),
-  app = express();
+  app = express(),
+  { check, validationResult } = require('express-validator');
 
+// CORS
 const cors = require('cors');
 app.use(cors());
 
+// Passport
 const passport = require('passport');
 require('./passport');
 
