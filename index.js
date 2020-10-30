@@ -42,4 +42,4 @@ app.use('/api/users', require('./routes/api/users'));
 
 // Port listening
 const port = process.env.PORT || 8181;
-app.listen(port, () => console.log(`Your app is listening on port ${port}...`));
+app.listen(port, '0.0.0.0', () => console.log(`Listening on Port ${port}`));
