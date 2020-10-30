@@ -37,7 +37,7 @@ router.get('/:MovieID', auth, (req, res) => {
 // @route    GET api/movies/:Genre
 // @desc     Get list of movies containing genre
 // @access   Private
-router.get('/:Genre', auth, (req, res) => {
+router.get('/genres/:Genre', auth, (req, res) => {
   Movies.find({ 'Genre.Name': `${req.params.Genre}` })
     .then((movie) => {
       res.status(201).json(movie);
@@ -51,7 +51,7 @@ router.get('/:Genre', auth, (req, res) => {
 // @route    GET api/movies/:Director
 // @desc     Get data about a specific director
 // @access   Private
-router.get('/:Director', auth, (req, res) => {
+router.get('/directors/:Director', auth, (req, res) => {
   Movies.findOne({ 'Director.Name': `${req.params.Director}` })
     .then((movie) => {
       res.status(201).json(movie.Director);
