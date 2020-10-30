@@ -1,8 +1,14 @@
-const Users = require('./../../models/Users');
-const express = require('express');
-const router = express.Router();
+const Users = require('./../../models/Users'),
+  express = require('express'),
+  passport = require('passport'),
+  router = express.Router();
 
-// Add a New User Account
+// Enable authentication
+const auth = passport.authenticate('jwt', { session: false });
+
+// @route    POST api/users
+// @desc     Register a new user account
+// @access   Public
 router.post('/', (req, res) => {
   Users.findOne({ Username: req.body.Username }).then((user) => {
     if (user) {
@@ -24,8 +30,10 @@ router.post('/', (req, res) => {
   });
 });
 
-// Update User Information
-router.put('/:Username', (req, res) => {
+// @route    PUT api/users/:Username
+// @desc     Update user information
+// @access   Private
+router.put('/:Username', auth, (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -48,8 +56,10 @@ router.put('/:Username', (req, res) => {
   );
 });
 
-// Add a Movie to User's List of Favorites
-router.post('/:Username/favorites/:MovieID', (req, res) => {
+// @route    POST api/users/:Username/:MovieID
+// @desc     Add a movie to user's favorites
+// @access   Private
+router.post('/:Username/:MovieID', auth, (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     { $push: { FavoriteMovies: req.params.MovieID } },
@@ -65,8 +75,10 @@ router.post('/:Username/favorites/:MovieID', (req, res) => {
   );
 });
 
-// Remove a Movie from User's Favorites
-router.delete('/:Username/favorites/:MovieID', (req, res) => {
+// @route    DELETE api/users/:Username/:MovieID
+// @desc     Remove a movie from user's favorites
+// @access   Private
+router.delete('/:Username/:MovieID', auth, (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     { $pull: { FavoriteMovies: req.params.MovieID } },
@@ -82,8 +94,10 @@ router.delete('/:Username/favorites/:MovieID', (req, res) => {
   );
 });
 
-// Remove a User's Account
-router.delete('/:Username', (req, res) => {
+// @route    DELETE api/users/:Username
+// @desc     Remove a user's account
+// @access   Private
+router.delete('/:Username', auth, (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {

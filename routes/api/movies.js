@@ -1,9 +1,15 @@
-const Movies = require('./../../models/Movies');
-const express = require('express');
-const router = express.Router();
+const Movies = require('./../../models/Movies'),
+  express = require('express'),
+  passport = require('passport'),
+  router = express.Router();
 
-// Return All Movies
-router.get('/', (req, res) => {
+// Enable authentication
+const auth = passport.authenticate('jwt', { session: false });
+
+// @route    GET api/movies
+// @desc     Get list of all movies
+// @access   Private
+router.get('/', auth, (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -14,8 +20,10 @@ router.get('/', (req, res) => {
     });
 });
 
-// Return a Single Movie
-router.get('/:MovieID', (req, res) => {
+// @route    GET api/movies/:MovieID
+// @desc     Get a specific movie by id
+// @access   Private
+router.get('/:MovieID', auth, (req, res) => {
   Movies.find({ _id: req.params.MovieID })
     .then((movie) => {
       res.status(201).json(movie);
@@ -26,8 +34,10 @@ router.get('/:MovieID', (req, res) => {
     });
 });
 
-// Return Movies Containing a Specific Genre
-router.get('/genres/:Genre', (req, res) => {
+// @route    GET api/movies/:Genre
+// @desc     Get list of movies containing genre
+// @access   Private
+router.get('/:Genre', auth, (req, res) => {
   Movies.find({ 'Genre.Name': `${req.params.Genre}` })
     .then((movie) => {
       res.status(201).json(movie);
@@ -38,8 +48,10 @@ router.get('/genres/:Genre', (req, res) => {
     });
 });
 
-// Return Data About a Director
-router.get('/directors/:Director', (req, res) => {
+// @route    GET api/movies/:Director
+// @desc     Get data about a specific director
+// @access   Private
+router.get('/:Director', auth, (req, res) => {
   Movies.findOne({ 'Director.Name': `${req.params.Director}` })
     .then((movie) => {
       res.status(201).json(movie.Director);

@@ -8,6 +8,9 @@ const express = require('express'),
   Users = require('./models/Users'),
   app = express();
 
+const passport = require('passport');
+require('./passport');
+
 // Connecting Database
 connectDB();
 
@@ -23,10 +26,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-// Routes
+// Define Routes
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to fightFlix');
 });
+app.use('/api/login', require('./routes/api/auth'));
 app.use('/api/movies', require('./routes/api/movies'));
 app.use('/api/users/', require('./routes/api/users'));
 

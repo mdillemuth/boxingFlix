@@ -101,9 +101,7 @@
           </tr>
           <tr>
             <th class="text-success" scope="row">GET</th>
-            <td>
-              /api/movies/genres/<span class="text-success">{Genre}</span>
-            </td>
+            <td>/api/movies/<span class="text-success">{Genre}</span></td>
             <td>Return all movies containing a specific genre</td>
             <td>N/A</td>
             <td>
@@ -113,9 +111,7 @@
           </tr>
           <tr>
             <th class="text-success">GET</th>
-            <td>
-              /api/movies/directors/<span class="text-success">{Director}</span>
-            </td>
+            <td>/api/movies/<span class="text-success">{Director}</span></td>
             <td>Return data about a single director</td>
             <td>N/A</td>
             <td>JSON object with data of a single director</td>
@@ -152,8 +148,10 @@
           <tr>
             <th class="text-warning" scope="row">POST</th>
             <td>
-              /api/users/<span class="text-success">{Username}</span
-              >/favorites/<span class="text-success">{Title}</span>
+              /api/users/<span class="text-success">{Username}</span>/<span
+                class="text-success"
+                >{Title}</span
+              >
             </td>
             <td>Add a movie to user's list of favorites</td>
             <td>N/A</td>
@@ -162,8 +160,10 @@
           <tr>
             <th class="text-danger">DELETE</th>
             <td>
-              /api/users/<span class="text-success">{Username}</span
-              >/favorites/<span class="text-success">{Title}</span>
+              /api/users/<span class="text-success">{Username}</span>/<span
+                class="text-success"
+                >{Title}</span
+              >
             </td>
             <td>Remove single movie from user's list of favorites</td>
             <td>N/A</td>
@@ -222,8 +222,7 @@
         <div class="col">
           <h3 class="h4">
             <span class="text-success">GET </span>request for a specific movie
-            genre (e.g.
-            <span class="text-success">/api/movies/genres/Boxing</span>)
+            genre (e.g. <span class="text-success">/api/movies/Boxing</span>)
           </h3>
           <img
             class="img-fluid"
@@ -237,9 +236,7 @@
           <h3 class="h4">
             <span class="text-success">GET </span> request for a single
             director. (e.g.
-            <span class="text-success"
-              >/api/movies/directors/Sylvester%20Stallone</span
-            >)
+            <span class="text-success">/api/movies/Sylvester%20Stallone</span>)
           </h3>
           <img
             class="img-fluid"
@@ -305,8 +302,7 @@
           <h3 class="h4">
             <span class="text-danger">DELETE </span>a movie from user's list of
             favorites(e.g.
-            <span class="text-success">/api/users/user123/favorites/Rocky</span
-            >)
+            <span class="text-success">/api/users/user123/Rocky</span>)
           </h3>
           <img
             class="img-fluid"
