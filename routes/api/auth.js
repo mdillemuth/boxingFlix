@@ -8,7 +8,7 @@ const jwtSecret = 'your_jwt_secret',
 require('./../../passport');
 
 // Encodes username in JWT
-let genereateJWTToken = (user) => {
+let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
     subject: user.Username,
     expiresIn: '7d',
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
       if (error) {
         res.send(error);
       }
-      let token = genereateJWTToken(user.toJSON());
+      let token = generateJWTToken(user.toJSON());
       return res.json({ user, token });
     });
   })(req, res);
