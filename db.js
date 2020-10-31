@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Database URI
-const db = 'mongodb://localhost:27017/fightFlixDB';
+const db = process.env.CONNECTION_URI;
 
 // Connecting database to mongoose asynchronously
 const connectDB = async () => {
