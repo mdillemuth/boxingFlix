@@ -36,7 +36,7 @@ router.get('/:MovieID', auth, async (req, res) => {
 // @access   Private
 router.get('/genres/:Genre', auth, async (req, res) => {
   try {
-    const movie = Movies.find({ 'Genre.Name': `${req.params.Genre}` });
+    const movie = await Movies.find({ 'Genre.Name': `${req.params.Genre}` });
     res.status(201).json(movie);
   } catch (error) {
     console.error(error.message);
