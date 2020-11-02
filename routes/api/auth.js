@@ -1,7 +1,7 @@
 const express = require('express'),
   router = express.Router();
 
-const jwtSecret = 'mySecretToken';
+const jwtSecret = process.env.fightFlix_jwtPrivateKey;
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('./../../passport');
