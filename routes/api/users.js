@@ -5,7 +5,6 @@ const Users = require('./../../models/Users'),
 
 const { check, validationResult } = require('express-validator');
 
-// Enable authentication
 const auth = passport.authenticate('jwt', { session: false });
 
 // @route    POST api/users
@@ -22,11 +21,9 @@ router.post(
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Invalid email').isEmail(),
   ],
-  (req, res) => {
-    // Checking results of validation
+  async (req, res) => {
+    // Validation
     let errors = validationResult(req);
-
-    // Return errors if invalid input
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
@@ -34,27 +31,26 @@ router.post(
     // Hashing password
     let hashedPassword = Users.hashPassword(req.body.Password);
 
-    // Checking if user exists
-    Users.findOne({ Username: req.body.Username }).then((user) => {
+    try {
+      // Checking if user exists
+      let user = await Users.findOne({ Username: req.body.Username });
+
       if (user) {
-        return res.status(400).send('Invalid Credentials');
+        return res.status(400).send('User already exists');
       } else {
-        // Create the account
-        Users.create({
+        // Create user account
+        user = await Users.create({
           Username: req.body.Username,
           Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
-        })
-          .then((user) => {
-            res.status(201).json(user);
-          })
-          .catch((err) => {
-            console.error(error);
-            res.status(500).send(`Error: ${err}`);
-          });
+        });
+        res.status(201).json(user);
       }
-    });
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send(`Server Error: ${error}`);
+    }
   }
 );
 
@@ -73,98 +69,89 @@ router.put(
     check('Email', 'Invalid email').isEmail(),
   ],
   auth,
-  (req, res) => {
-    // Checking validation
+  async (req, res) => {
+    // Validation
     let errors = validationResult(req);
-
-    // Return errors if invalid input
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
-    Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $set: {
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday,
+    try {
+      // Find user account
+      let user = await Users.findOneAndUpdate(
+        { Username: req.params.Username },
+        {
+          // Update fields
+          $set: {
+            Username: req.body.Username,
+            Password: Users.hashPassword(req.body.Password),
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
+          },
         },
-      },
-      { new: true },
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send(`Error: ${err}`);
-        } else {
-          res.status(201).json(updatedUser);
-        }
-      }
-    );
+        { new: true }
+      );
+      res.status(201).json(user);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send(`Server Error: ${error}`);
+    }
   }
 );
 
 // @route    POST api/users/:Username/:MovieID
 // @desc     Add a movie to user's favorites
 // @access   Private
-router.post('/:Username/:MovieID', auth, (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    { $push: { FavoriteMovies: req.params.MovieID } },
-    { new: true },
-    (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send(`Error: ${err}`);
-      } else {
-        res.status(201).json(updatedUser.FavoriteMovies);
-      }
-    }
-  );
+router.post('/:Username/:MovieID', auth, async (req, res) => {
+  try {
+    let user = await Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      { $push: { FavoriteMovies: req.params.MovieID } },
+      { new: true }
+    );
+    res.status(201).json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(`Server Error: ${error}`);
+  }
 });
 
 // @route    DELETE api/users/:Username/:MovieID
 // @desc     Remove a movie from user's favorites
 // @access   Private
-router.delete('/:Username/:MovieID', auth, (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    { $pull: { FavoriteMovies: req.params.MovieID } },
-    { new: true },
-    (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send(`Error: ${err}`);
-      } else {
-        res.status(201).json(updatedUser.FavoriteMovies);
-      }
-    }
-  );
+router.delete('/:Username/:MovieID', auth, async (req, res) => {
+  try {
+    let user = await Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      { $pull: { FavoriteMovies: req.params.MovieID } },
+      { new: true }
+    );
+    res.status(201).send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(`Server Error: ${error}`);
+  }
 });
 
 // @route    DELETE api/users/:Username
 // @desc     Remove a user's account
 // @access   Private
-router.delete('/:Username', auth, (req, res) => {
-  Users.findOneAndRemove({ Username: req.params.Username })
-    .then((user) => {
-      if (!user) {
-        res
-          .status(400)
-          .send(
-            `No account with the username "${req.params.Username}" was found.`
-          );
-      } else {
-        res
-          .status(200)
-          .send(`${req.params.Username}'s account was successfully deleted.`);
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send(`Error: ${err}`);
-    });
+router.delete('/:Username', auth, async (req, res) => {
+  try {
+    let user = await Users.findOneAndRemove({ Username: req.params.Username });
+    if (!user) {
+      res
+        .status(400)
+        .send(`No account with username ${req.params.Username} was found.`);
+    } else {
+      res
+        .status(200)
+        .send(`${req.params.Username}'s account was successfully deleted!`);
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(`Server Error: ${error}`);
+  }
 });
 
 module.exports = router;

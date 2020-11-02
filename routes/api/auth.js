@@ -1,10 +1,10 @@
 const express = require('express'),
   router = express.Router();
 
-const jwtSecret = 'your_jwt_secret',
-  jwt = require('jsonwebtoken'),
-  passport = require('passport');
-
+const config = require('config');
+const jwtSecret = config.get('jwtSecret');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
 require('./../../passport');
 
 // Encodes username in JWT
