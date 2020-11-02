@@ -1,8 +1,7 @@
 const express = require('express'),
   router = express.Router();
 
-const config = require('config');
-const jwtSecret = config.get('jwtSecret');
+const jwtSecret = 'mySecretToken';
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('./../../passport');
