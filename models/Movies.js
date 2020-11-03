@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 // Define Schema for Movies
-let movieSchema = new mongoose.Schema({
-  Title: { type: String, required: true },
+const movieSchema = new mongoose.Schema({
+  Title: { type: String, required: true, unique: true },
   Description: { type: String, required: true },
   Genre: {
     Name: String,

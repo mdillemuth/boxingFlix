@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // Define Schema for Users
-let userSchema = new mongoose.Schema({
-  Username: { type: String, required: true },
+const userSchema = new mongoose.Schema({
+  Username: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
-  Email: { type: String, required: true },
+  Email: { type: String, required: true, unique: true },
   Birthday: Date,
   FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 });
