@@ -4,7 +4,7 @@ const Movies = require('./../../models/Movies'),
   router = express.Router();
 
 // Commented out for building the front-end
-// const auth = passport.authenticate('jwt', { session: false });
+const auth = passport.authenticate('jwt', { session: false });
 
 // @route    GET api/movies
 // @desc     Get list of all movies
