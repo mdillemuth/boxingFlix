@@ -3,7 +3,8 @@ const Movies = require('./../../models/Movies'),
   passport = require('passport'),
   router = express.Router();
 
-const auth = passport.authenticate('jwt', { session: false });
+// Commented out for building the front-end
+// const auth = passport.authenticate('jwt', { session: false });
 
 // @route    GET api/movies
 // @desc     Get list of all movies
