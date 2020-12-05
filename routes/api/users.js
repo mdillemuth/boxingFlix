@@ -54,6 +54,21 @@ router.post(
   }
 );
 
+// @route    GET api/users/:Username
+// @desc     Retrieve user information
+// @access   Private
+router.get('/:Username', auth, async (req, res) => {
+  try {
+    let user = await Users.find({
+      Username: req.params.Username,
+    });
+    res.status(201).json(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(`Server Error: ${error}`);
+  }
+});
+
 // @route    PUT api/users/:Username
 // @desc     Update user information
 // @access   Private

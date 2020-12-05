@@ -32,7 +32,7 @@ router.get('/:MovieID', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/movies/:Genre
+// @route    GET api/movies/genres/:Genre
 // @desc     Get list of movies containing genre
 // @access   Private
 router.get('/genres/:Genre', auth, async (req, res) => {
@@ -45,7 +45,7 @@ router.get('/genres/:Genre', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/movies/:Director
+// @route    GET api/movies/directors/:Director
 // @desc     Get data about a specific director
 // @access   Private
 router.get('/directors/:Director', auth, async (req, res) => {
