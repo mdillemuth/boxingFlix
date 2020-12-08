@@ -12,13 +12,11 @@ const express = require('express'),
 // CORS
 const cors = require('cors');
 
-app.use(cors());
-
-app.options('*', (req, res) => {
-  res.set({
-    'Access-Control-Allow-Headers': 'Authorization',
-  });
-});
+app.use(
+  cors({
+    allowedHeaders: '*',
+  })
+);
 
 // Passport
 const passport = require('passport');
