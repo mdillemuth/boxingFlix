@@ -69,7 +69,7 @@ router.get('/:Username', auth, async (req, res) => {
 });
 
 router.options('/:Username', (req, res) => {
-  res.header({
+  res.set({
     'Access-Control-Allow-Headers': 'Authorization',
   });
 });
