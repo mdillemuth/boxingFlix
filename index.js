@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/login', require('./routes/api/auth'));
 app.use('/api/movies', require('./routes/api/movies'));
-app.use('/api/users', cors(corsOptions), require('./routes/api/users'));
+app.use('/api/users', require('./routes/api/users'));
 
 // Port listening
 const port = process.env.PORT || 8181;
