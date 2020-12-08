@@ -12,14 +12,13 @@ const express = require('express'),
 // CORS
 const cors = require('cors');
 
-var corsOptions = {
-  origin: '*',
-  allowHeaders: 'Authorization',
-  preflightContinue: true,
-};
+app.use(cors());
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.options('*', (req, res) => {
+  res.set({
+    'Access-Control-Allow-Headers': 'Authorization',
+  });
+});
 
 // Passport
 const passport = require('passport');

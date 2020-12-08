@@ -68,12 +68,6 @@ router.get('/:Username', auth, async (req, res) => {
   }
 });
 
-router.options('/:Username', (req, res) => {
-  res.set({
-    'Access-Control-Allow-Headers': 'Authorization',
-  });
-});
-
 // @route    PUT api/users/:Username
 // @desc     Update user information
 // @access   Private
