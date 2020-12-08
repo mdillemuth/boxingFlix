@@ -76,6 +76,8 @@ router.get('/:Username', auth, async (req, res) => {
   }
 });
 
+app.options('/:Username', cors());
+
 // @route    PUT api/users/:Username
 // @desc     Update user information
 // @access   Private
