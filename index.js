@@ -15,6 +15,7 @@ const cors = require('cors');
 var corsOptions = {
   origin: '*',
   preflightContinue: true,
+  allowHeaders: 'Authorization',
 };
 app.use(cors(corsOptions));
 
