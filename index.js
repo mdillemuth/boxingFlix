@@ -19,8 +19,12 @@ var allowedOrigins = [
   'http://localhost:1234',
 ];
 
+app.options('*', cors());
+
 app.use(
   cors({
+    allowedHeaders: ['Authorization'],
+    credentials: true,
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
