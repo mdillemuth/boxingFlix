@@ -3,14 +3,6 @@ const Users = require('./../../models/Users'),
   passport = require('passport'),
   router = express.Router();
 
-// CORS
-const app = express();
-const cors = require('cors');
-app.use(cors());
-var corsOptions = {
-  allowedHeaders: 'Authorization',
-};
-
 const { check, validationResult } = require('express-validator');
 const auth = passport.authenticate('jwt', { session: false });
 
@@ -76,14 +68,11 @@ router.get('/:Username', auth, async (req, res) => {
   }
 });
 
-app.options('/:Username', cors(corsOptions));
-
 // @route    PUT api/users/:Username
 // @desc     Update user information
 // @access   Private
 router.put(
   '/:Username',
-  cors(corsOptions),
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
     check(

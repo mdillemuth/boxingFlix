@@ -11,7 +11,12 @@ const express = require('express'),
 
 // CORS
 const cors = require('cors');
-app.use(cors());
+
+var corsOptions = {
+  origin: '*',
+  preflightContinue: true,
+};
+app.use(cors(corsOptions));
 
 // Passport
 const passport = require('passport');
