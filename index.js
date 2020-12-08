@@ -17,7 +17,9 @@ var corsOptions = {
   preflightContinue: true,
   allowHeaders: 'Authorization',
 };
+
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // Passport
 const passport = require('passport');
