@@ -3,8 +3,15 @@ const Users = require('./../../models/Users'),
   passport = require('passport'),
   router = express.Router();
 
-const { check, validationResult } = require('express-validator');
+// CORS
+const app = express();
+const cors = require('cors');
+app.use(cors());
+var corsOptions = {
+  allowedHeaders: 'Authorization',
+};
 
+const { check, validationResult } = require('express-validator');
 const auth = passport.authenticate('jwt', { session: false });
 
 // @route    POST api/users
@@ -74,6 +81,7 @@ router.get('/:Username', auth, async (req, res) => {
 // @access   Private
 router.put(
   '/:Username',
+  cors(corsOptions),
   [
     check('Username', 'Username is required').isLength({ min: 5 }),
     check(
@@ -84,7 +92,7 @@ router.put(
     check('Email', 'Invalid email').isEmail(),
   ],
   auth,
-  async (req, res) => {
+  async (req, res, next) => {
     // Validation
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -106,7 +114,7 @@ router.put(
         },
         { new: true }
       );
-      res.status(201).json(user);
+      res.status(201).send(user);
     } catch (error) {
       console.error(error.message);
       res.status(500).send(`Server Error: ${error}`);
