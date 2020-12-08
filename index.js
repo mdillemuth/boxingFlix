@@ -13,6 +13,25 @@ const express = require('express'),
 const cors = require('cors');
 app.use(cors());
 
+var allowedOrigins = [
+  'http://my-fight-flix.herokuapp.com/',
+  'https://my-fight-flix.herokuapp.com/',
+  'http://localhost:1234',
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        var message = `The CORS policy from this application doesn't allow access from origin ${origin}`;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
+
 // Passport
 const passport = require('passport');
 require('./passport');
