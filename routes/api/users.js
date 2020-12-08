@@ -76,7 +76,7 @@ router.get('/:Username', auth, async (req, res) => {
   }
 });
 
-app.options('/:Username', cors());
+app.options('/:Username', cors(corsOptions));
 
 // @route    PUT api/users/:Username
 // @desc     Update user information
