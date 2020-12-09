@@ -118,17 +118,12 @@ router.put(
 // @access   Private
 router.post('/:Username/:MovieID', auth, async (req, res) => {
   try {
-    let user = await Users.findOne({ Username: req.body.Username });
-    if (user.FavoriteMovies.indexOf(req.params.MovieID) > -1) {
-      await res.status(400).send('Movie already in favorites');
-    } else {
-      let user = await Users.findOneAndUpdate(
-        { Username: req.params.Username },
-        { $push: { FavoriteMovies: req.params.MovieID } },
-        { new: true }
-      );
-      res.status(201).json(user);
-    }
+    let user = await Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      { $push: { FavoriteMovies: req.params.MovieID } },
+      { new: true }
+    );
+    res.status(201).json(user);
   } catch (error) {
     console.error(error.message);
     res.status(500).send(`Server Error: ${error}`);
