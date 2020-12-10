@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   Username: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
   Email: { type: String, required: true, unique: true },
-  Birthday: Date,
+  Birthday: { type: Date, required: true },
   FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
 });
 

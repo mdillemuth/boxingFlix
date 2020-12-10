@@ -19,6 +19,7 @@ router.post(
     ).isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Invalid email').isEmail(),
+    check('Birthday', 'Birthday is required').not().isEmpty(),
   ],
   async (req, res) => {
     // Validation
@@ -81,6 +82,7 @@ router.put(
     ).isAlphanumeric(),
     check('Password', 'Password is required').not().isEmpty(),
     check('Email', 'Invalid email').isEmail(),
+    check('Birthday', 'Birthday is required').not().isEmpty(),
   ],
   auth,
   async (req, res) => {
