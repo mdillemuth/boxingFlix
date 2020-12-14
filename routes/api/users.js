@@ -59,7 +59,7 @@ router.post(
 // @access   Private
 router.get('/:Username', auth, async (req, res) => {
   try {
-    let user = await Users.findOne({
+    let user = await Users.find({
       Username: req.params.Username,
     });
     res.status(201).json(user);
