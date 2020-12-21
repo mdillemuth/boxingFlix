@@ -61,7 +61,7 @@ router.get('/:Username', auth, async (req, res) => {
   try {
     let user = await Users.find({
       Username: req.params.Username,
-    });
+    }).select('-Password');
     res.status(201).json(user);
   } catch (error) {
     console.error(error.message);
