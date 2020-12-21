@@ -36,7 +36,9 @@ router.post(
       let user = await Users.findOne({ Username: req.body.Username });
 
       if (user) {
-        return res.status(400).send('User already exists');
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'User already exists' }] });
       } else {
         // Create user account
         user = await Users.create({
