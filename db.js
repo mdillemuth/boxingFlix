@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 // Database URI
 const db = process.env.fightFlix_URI;
 
-// Connecting database to mongoose asynchronously
+/**
+ * Connects database to mongoose
+ */
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {

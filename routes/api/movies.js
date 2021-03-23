@@ -3,12 +3,13 @@ const Movies = require('./../../models/Movies'),
   passport = require('passport'),
   router = express.Router();
 
-// Commented out for building the front-end
 const auth = passport.authenticate('jwt', { session: false });
 
-// @route    GET api/movies
-// @desc     Get list of all movies
-// @access   Private
+/**
+ * @route    GET api/movies
+ * @desc     Get list of all movies
+ * @access   Private
+ */
 router.get('/', auth, async (req, res) => {
   try {
     const movies = await Movies.find();
@@ -19,9 +20,11 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/movies/:MovieID
-// @desc     Get a specific movie by id
-// @access   Private
+/**
+ * @route    GET api/movies/:MovieID
+ * @desc     Get a specific movie by id
+ * @access   Private
+ */
 router.get('/:MovieID', auth, async (req, res) => {
   try {
     const movie = await Movies.find({ _id: req.params.MovieID });
@@ -32,9 +35,11 @@ router.get('/:MovieID', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/movies/genres/:Genre
-// @desc     Get list of movies containing genre
-// @access   Private
+/**
+ * @route    GET api/movies/genres/:Genre
+ * @desc     Get list of movies containing genre
+ * @access   Private
+ */
 router.get('/genres/:Genre', auth, async (req, res) => {
   try {
     const movie = await Movies.find({ 'Genre.Name': `${req.params.Genre}` });
@@ -45,9 +50,11 @@ router.get('/genres/:Genre', auth, async (req, res) => {
   }
 });
 
-// @route    GET api/movies/directors/:Director
-// @desc     Get data about a specific director
-// @access   Private
+/**
+ * @route GET api/movies/directors/:Director
+ * @desc Get data about a specific director
+ * @access Private
+ */
 router.get('/directors/:Director', auth, async (req, res) => {
   try {
     const movie = await Movies.findOne({

@@ -6,9 +6,11 @@ const Users = require('./../../models/Users'),
 const { check, validationResult } = require('express-validator');
 const auth = passport.authenticate('jwt', { session: false });
 
-// @route    POST api/users
-// @desc     Register a new user account
-// @access   Public
+/**
+ * @route   POST api/users
+ * @desc    Register a new user account
+ * @access  Public
+ */
 router.post(
   '/',
   [
@@ -56,9 +58,11 @@ router.post(
   }
 );
 
-// @route    GET api/users/:Username
-// @desc     Retrieve user information
-// @access   Private
+/**
+ * @route    GET api/users/:Username
+ * @desc     Retrieve user information
+ * @access   Private
+ */
 router.get('/:Username', auth, async (req, res) => {
   try {
     let user = await Users.find({
@@ -71,9 +75,11 @@ router.get('/:Username', auth, async (req, res) => {
   }
 });
 
-// @route    PUT api/users/:Username
-// @desc     Update user information
-// @access   Private
+/**
+ * @route    PUT api/users/:Username
+ * @desc     Update user information
+ * @access   Private
+ */
 router.put(
   '/:Username',
   [
@@ -117,9 +123,11 @@ router.put(
   }
 );
 
-// @route    POST api/users/:Username/:MovieID
-// @desc     Add a movie to user's favorites
-// @access   Private
+/**
+ * @route    POST api/users/:Username/:MovieID
+ * @desc     Add a movie to user's favorites
+ * @access   Private
+ */
 router.post('/:Username/:MovieID', auth, async (req, res) => {
   try {
     let user = await Users.findOneAndUpdate(
@@ -134,9 +142,11 @@ router.post('/:Username/:MovieID', auth, async (req, res) => {
   }
 });
 
-// @route    DELETE api/users/:Username/:MovieID
-// @desc     Remove a movie from user's favorites
-// @access   Private
+/**
+ * @route    DELETE api/users/:Username/:MovieID
+ * @desc     Remove a movie from user's favorites
+ * @access   Private
+ */
 router.delete('/:Username/:MovieID', auth, async (req, res) => {
   try {
     let user = await Users.findOneAndUpdate(
@@ -151,9 +161,11 @@ router.delete('/:Username/:MovieID', auth, async (req, res) => {
   }
 });
 
-// @route    DELETE api/users/:Username
-// @desc     Remove a user's account
-// @access   Private
+/**
+ * @route    DELETE api/users/:Username
+ * @desc     Remove a user's account
+ * @access   Private
+ */
 router.delete('/:Username', auth, async (req, res) => {
   try {
     let user = await Users.findOneAndRemove({ Username: req.params.Username });
